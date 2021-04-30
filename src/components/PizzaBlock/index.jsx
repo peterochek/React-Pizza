@@ -1,8 +1,18 @@
 import { useState } from 'react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
+import Button from '../Button'
 
-const Index = ({ name, imageUrl, price, types, sizes }) => {
+const Index = ({
+    id,
+    name,
+    imageUrl,
+    price,
+    types,
+    sizes,
+    onClickAddPizza,
+    addedCount,
+}) => {
     const pizzaTypes = ['тонкое', 'традиционное']
     const [selectedType, setSelectedType] = useState(types[0])
     const onChangeType = (index) => {
@@ -13,6 +23,18 @@ const Index = ({ name, imageUrl, price, types, sizes }) => {
     const [selectedSize, setSelectedSize] = useState(sizes[0])
     const onChangeSize = (index) => {
         setSelectedSize(pizzaSizes[index])
+    }
+
+    const onAddPizza = () => {
+        const obj = {
+            id,
+            name,
+            imageUrl,
+            price,
+            size: pizzaSizes[selectedSize],
+            type: pizzaTypes[selectedType],
+        }
+        onClickAddPizza(obj)
     }
 
     //const isLoaded = useSelector((state) => state.pizzas.isLoaded)
@@ -53,7 +75,7 @@ const Index = ({ name, imageUrl, price, types, sizes }) => {
             </div>
             <div className='pizza-block__bottom'>
                 <div className='pizza-block__price'>от {price} ₽</div>
-                <div className='button button--outline button--add'>
+                <Button onClick={onAddPizza} className='button--add' outline>
                     <svg
                         width='12'
                         height='12'
@@ -66,8 +88,8 @@ const Index = ({ name, imageUrl, price, types, sizes }) => {
                         />
                     </svg>
                     <span>Добавить</span>
-                    <i>2</i>
-                </div>
+                    {addedCount && <i>{addedCount}</i>}
+                </Button>
             </div>
         </div>
     )

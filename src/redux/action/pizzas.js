@@ -6,9 +6,9 @@ export const fetchPizzas = (sortBy, catIndex) => async (dispatch) => {
         payload: false,
     })
     const { data } = await axios.get(
-        `http://localhost:3001/pizzas?${
-            catIndex !== null ? `category=${catIndex}` : ''
-        }&_sort=${sortBy.type}&_order=${sortBy.order}`
+        `/pizzas?${catIndex !== null ? `category=${catIndex}` : ''}&_sort=${
+            sortBy.type
+        }&_order=${sortBy.order}`
     )
     dispatch(setPizzas(data))
 }
